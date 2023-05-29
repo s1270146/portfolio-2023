@@ -23,6 +23,10 @@ class TypeWriterText extends StatelessWidget {
         child: AnimatedTextKit(
           totalRepeatCount: 20,
           onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => transitionTargetWidget),
+            );
           },
           pause: const Duration(milliseconds: 3000),
           animatedTexts: [
