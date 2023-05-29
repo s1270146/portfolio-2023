@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio_2023/component/header/header.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -6,10 +7,7 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: const Text('ヘッダー'),
-      ),
+      appBar: Header(),
       body: Container(),
     );
   }
