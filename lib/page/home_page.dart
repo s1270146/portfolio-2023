@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio_2023/component/type_writer_text.dart';
-import 'package:portfolio_2023/page/profile_page.dart';
+import 'package:portfolio_2023/page/base_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -36,28 +36,28 @@ class _HomePageState extends State<HomePage> {
                   width: textWidth,
                   child: const TypeWriterText(
                     displayText: 'Profile',
-                    transitionTargetWidget: ProfilePage(),
+                    transitionTargetWidget: BasePage(),
                   ),
                 ),
                 SizedBox(
                   width: textWidth,
                   child: const TypeWriterText(
                     displayText: 'Works',
-                    transitionTargetWidget: ProfilePage(),
+                    transitionTargetWidget: BasePage(),
                   ),
                 ),
                 SizedBox(
                   width: textWidth,
                   child: const TypeWriterText(
                     displayText: 'Blog',
-                    transitionTargetWidget: ProfilePage(),
+                    transitionTargetWidget: BasePage(),
                   ),
                 ),
                 SizedBox(
                   width: textWidth,
                   child: const TypeWriterText(
                     displayText: 'Research',
-                    transitionTargetWidget: ProfilePage(),
+                    transitionTargetWidget: BasePage(),
                   ),
                 ),
               ],
