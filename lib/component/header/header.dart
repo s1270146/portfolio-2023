@@ -3,7 +3,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:portfolio_2023/component/header/header_tag.dart';
 import 'package:portfolio_2023/component/variable_provider.dart';
 import 'package:portfolio_2023/page/home_page.dart';
-import 'package:portfolio_2023/page/base_page.dart';
+import 'package:portfolio_2023/page/main_content_page/blog_page.dart';
+import 'package:portfolio_2023/page/main_content_page/profile_page.dart';
+import 'package:portfolio_2023/page/main_content_page/research_page.dart';
+import 'package:portfolio_2023/page/main_content_page/works_page.dart';
 
 class Header extends ConsumerWidget implements PreferredSizeWidget {
   const Header({super.key});
@@ -47,19 +50,19 @@ class Header extends ConsumerWidget implements PreferredSizeWidget {
           ? const [
               HeaderTag(
                 text: 'PROFILE',
-                transitionTargetWidget: BasePage(),
+                transitionTargetWidget: ProfilePage(),
               ),
               HeaderTag(
                 text: 'WORKS',
-                transitionTargetWidget: BasePage(),
+                transitionTargetWidget: WorksPage(),
               ),
               HeaderTag(
                 text: 'BLOG',
-                transitionTargetWidget: BasePage(),
+                transitionTargetWidget: BlogPage(),
               ),
               HeaderTag(
                 text: 'RESEARCH',
-                transitionTargetWidget: BasePage(),
+                transitionTargetWidget: ResearchPage(),
               ),
               SizedBox(
                 width: 20,
