@@ -1,16 +1,20 @@
-# portfolio_2023
+# Flutter でポートフォリオ(マイサイト)を作成
 
-A new Flutter project.
+## 目的
 
-## Getting Started
+- Github になるべく毎日草を生やしたい → ブログの投稿が必須
+- React で作成したポートフォリオが微妙
+- Flutter が得意！
+- 最近バイトでは Django だから Flutter がなまってしまう
 
-This project is a starting point for a Flutter application.
+## 手順
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+1. Firebase Hosting にデプロイ
+   1. Github Action が使えるかどうかを確認
+2. 色合いを決める
+3. ~~共通のヘッダーを作成~~
+4. Footer を作成
+5. プロフィール画面を作成
+6. Works の画面を作成
+7. Blog の画面を作成
+8. Research の画面を作成
