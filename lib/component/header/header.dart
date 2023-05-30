@@ -15,6 +15,8 @@ class Header extends ConsumerWidget implements PreferredSizeWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final maxPhoneWidth = ref.watch(maxPhoneWidthProvider);
     return AppBar(
+      toolbarHeight: 70,
+      leadingWidth: 100,
       leading: MouseRegion(
         cursor: SystemMouseCursors.click, // クリックカーソルを指定
         child: GestureDetector(
@@ -26,10 +28,15 @@ class Header extends ConsumerWidget implements PreferredSizeWidget {
               ),
             );
           },
-          child: Image.asset(
-            'images/title.png',
-            colorBlendMode: BlendMode.srcIn,
-            color: Colors.transparent,
+          child: Container(
+            margin: const EdgeInsets.only(left: 20),
+            // padding: const EdgeInsets.all(0),
+            child: Image.asset(
+              'images/title.png',
+              colorBlendMode: BlendMode.srcIn,
+              color: Colors.transparent,
+              fit: BoxFit.contain,
+            ),
           ),
         ),
       ),
@@ -53,6 +60,9 @@ class Header extends ConsumerWidget implements PreferredSizeWidget {
               HeaderTag(
                 text: 'RESEARCH',
                 transitionTargetWidget: BasePage(),
+              ),
+              SizedBox(
+                width: 20,
               ),
             ]
           : null,
