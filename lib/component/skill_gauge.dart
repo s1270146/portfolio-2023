@@ -1,39 +1,65 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:portfolio_2023/component/custom_color.dart';
 
-class SkillGauge extends StatelessWidget {
+class SkillGauge extends ConsumerWidget {
   const SkillGauge({
     super.key,
     required this.skillPoint,
     required this.skillName,
-    required this.halfWidth,
+    required this.widgetWidth,
   });
 
   final int skillPoint;
   final String skillName;
-  final double halfWidth;
+  final double widgetWidth;
 
   @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: halfWidth,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Container(
+      margin: const EdgeInsets.only(
+        top: 10,
+      ),
+      width: widgetWidth,
+      child: Column(
         children: [
-          SizedBox(width: 50, child: Text(skillName)),
           SizedBox(
-            width: 300,
-            child: ClipRRect(
-              borderRadius: const BorderRadius.all(Radius.circular(5)),
-              child: LinearProgressIndicator(
-                value: (skillPoint).toDouble() / 100,
-                valueColor:
-                    AlwaysStoppedAnimation(getCurrentHpColor(skillPoint)),
-                backgroundColor: Colors.grey,
-                minHeight: 20,
+            width: widgetWidth,
+            child: Text(
+              skillName,
+              style: const TextStyle(
+                color: Colors.black,
               ),
+              textAlign: TextAlign.left,
             ),
           ),
-          Text('${skillPoint.toString().padLeft(4, '  ')}/100'),
+          SizedBox(
+            width: widgetWidth,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(
+                  width: widgetWidth * 0.75,
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(5)),
+                    child: LinearProgressIndicator(
+                      value: (skillPoint).toDouble() / 100,
+                      valueColor:
+                          AlwaysStoppedAnimation(getCurrentHpColor(skillPoint)),
+                      backgroundColor: Colors.grey,
+                      minHeight: 20,
+                    ),
+                  ),
+                ),
+                Text(
+                  '${skillPoint.toString().padLeft(4, '  ')}/100',
+                  style: const TextStyle(
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );

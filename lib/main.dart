@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Koyo Mori',
       locale: DevicePreview.locale(context),
       debugShowCheckedModeBanner: false,
       builder: DevicePreview.appBuilder,
