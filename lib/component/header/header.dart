@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:portfolio_2023/component/custom_color.dart';
 import 'package:portfolio_2023/component/header/header_tag.dart';
 import 'package:portfolio_2023/component/variable_provider.dart';
 import 'package:portfolio_2023/page/home_page.dart';
@@ -16,8 +17,10 @@ class Header extends ConsumerWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final myColor = ref.watch(customColorProvider);
     final maxPhoneWidth = ref.watch(maxPhoneWidthProvider);
     return AppBar(
+      backgroundColor: myColor.blue,
       toolbarHeight: 70,
       leadingWidth: 100,
       leading: MouseRegion(
