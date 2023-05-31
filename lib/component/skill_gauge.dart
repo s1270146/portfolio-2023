@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:portfolio_2023/component/custom_color.dart';
 
 class SkillGauge extends ConsumerWidget {
   const SkillGauge({
