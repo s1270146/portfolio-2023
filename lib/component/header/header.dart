@@ -19,6 +19,10 @@ class Header extends ConsumerWidget implements PreferredSizeWidget {
     final myColor = ref.watch(customColorProvider);
     final maxPhoneWidth = ref.watch(mediumSizeProvider);
     return AppBar(
+      iconTheme: IconThemeData(
+        color: myColor.pink,
+        size: 50,
+      ),
       backgroundColor: myColor.blue,
       toolbarHeight: 70,
       leadingWidth: 100,

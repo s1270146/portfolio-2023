@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:portfolio_2023/component/custom_color.dart';
 import 'package:portfolio_2023/page/main_content_page/main_content_page_provider.dart';
 
 class CustomDrawerTag extends ConsumerWidget {
@@ -11,6 +12,8 @@ class CustomDrawerTag extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final myColor = ref.watch(customColorProvider);
+
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
@@ -21,7 +24,19 @@ class CustomDrawerTag extends ConsumerWidget {
                 );
           },
           child: Container(
-            color: Colors.green,
+            decoration: BoxDecoration(
+              color: myColor.green,
+              border: Border(
+                top: BorderSide(
+                  color: myColor.blue,
+                  width: 1,
+                ),
+                bottom: BorderSide(
+                  color: myColor.blue,
+                  width: 1,
+                ),
+              ),
+            ),
             height: 80,
             child: Container(
               padding: const EdgeInsets.all(10),
