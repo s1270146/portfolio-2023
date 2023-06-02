@@ -4,15 +4,24 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:portfolio_2023/page/home_page.dart';
 
+// void main() {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   runApp(
+//     DevicePreview(
+//       enabled: !kReleaseMode,
+//       builder: (context) => const ProviderScope(
+//         child: MyApp(),
+//       ), // Wrap your app
+//     ),
+//   );
+// }
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
-    DevicePreview(
-      enabled: !kReleaseMode,
-      builder: (context) => const ProviderScope(
-        child: MyApp(),
-      ), // Wrap your app
-    ),
+    const ProviderScope(
+      child: MyApp(),
+    ), // Wrap your
   );
 }
 

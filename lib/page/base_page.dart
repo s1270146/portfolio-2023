@@ -11,7 +11,7 @@ class BasePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final maxPhoneWidth = ref.watch(maxPhoneWidthProvider);
+    final maxPhoneWidth = ref.watch(mediumSizeProvider);
     final currentPage = ref.watch(currentPageProvider);
     final myColor = ref.watch(customColorProvider);
     return Scaffold(
