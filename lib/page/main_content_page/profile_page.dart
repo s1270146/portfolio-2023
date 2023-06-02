@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio_2023/component/profile_sentence.dart';
-import 'package:portfolio_2023/component/profile_title.dart';
-import 'package:portfolio_2023/component/skill_gauge.dart';
+import 'package:portfolio_2023/component/profile/profile_sentence.dart';
+import 'package:portfolio_2023/component/profile/profile_title.dart';
+import 'package:portfolio_2023/component/profile/skill_gauge.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
