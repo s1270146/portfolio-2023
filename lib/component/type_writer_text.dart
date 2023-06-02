@@ -1,7 +1,10 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:portfolio_2023/page/base_page.dart';
+import 'package:portfolio_2023/page/main_content_page/main_content_page_provider.dart';
 
-class TypeWriterText extends StatelessWidget {
+class TypeWriterText extends ConsumerWidget {
   const TypeWriterText({
     super.key,
     required this.displayText,
@@ -12,7 +15,7 @@ class TypeWriterText extends StatelessWidget {
   final Widget transitionTargetWidget;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return InkWell(
       onTap: () {},
       child: DefaultTextStyle(
@@ -25,8 +28,13 @@ class TypeWriterText extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => transitionTargetWidget),
+              MaterialPageRoute(
+                builder: (context) => const BasePage(),
+              ),
             );
+            ref.read(currentPageProvider.notifier).update(
+                  (state) => transitionTargetWidget,
+                );
           },
           pause: const Duration(milliseconds: 3000),
           animatedTexts: [
