@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio_2023/component/profile/account_icon.dart';
 import 'package:portfolio_2023/component/profile/profile_sentence.dart';
 import 'package:portfolio_2023/component/profile/profile_title.dart';
 import 'package:portfolio_2023/component/profile/skill_gauge.dart';
@@ -98,6 +99,40 @@ class ProfilePage extends StatelessWidget {
                   ProfileTitle(
                     title: 'Account',
                     profileTitleWidth: childWidgetWidth,
+                  ),
+                  SizedBox(
+                    width: childWidgetWidth,
+                    child: const Row(
+                      children: [
+                        AccountIcon(
+                          imagePath: 'images/facebook.png',
+                          radius: 30,
+                          accountPath:
+                              'https://www.facebook.com/profile.php?id=100091787600298',
+                        ),
+                        AccountIcon(
+                          imagePath: 'images/linkedin.png',
+                          radius: 28,
+                          accountPath:
+                              'https://www.linkedin.com/in/%E8%88%AA%E6%B4%8B-%E6%A3%AE-14b958237/',
+                        ),
+                        AccountIcon(
+                          imagePath: 'images/twitter.png',
+                          radius: 35,
+                          accountPath: 'https://twitter.com/PascalRoma27',
+                        ),
+                        AccountIcon(
+                          imagePath: 'images/github.png',
+                          radius: 29,
+                          accountPath: 'https://github.com/s1270146',
+                        ),
+                        AccountIcon(
+                          imagePath: 'images/zenn.png',
+                          radius: 32,
+                          accountPath: 'https://zenn.dev/pascal',
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
