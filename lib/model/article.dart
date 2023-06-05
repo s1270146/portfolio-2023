@@ -48,9 +48,15 @@ class Article {
                   title,
                   style: const TextStyle(
                     fontSize: 26,
+                    color: Colors.black,
                   ),
                 ),
-                Text(createDate.toString()),
+                Text(
+                  createDate.toString(),
+                  style: TextStyle(
+                    color: Colors.black,
+                  ),
+                ),
                 const SizedBox(
                   height: 5,
                 ),
