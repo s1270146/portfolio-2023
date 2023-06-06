@@ -19,7 +19,7 @@ class BasePage extends ConsumerWidget {
       appBar: const Header(),
       endDrawer: MediaQuery.of(context).size.width > maxPhoneWidth
           ? null
-          : CustomDrawer(),
+          : const CustomDrawer(),
       body: currentPage,
     );
   }
