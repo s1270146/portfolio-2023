@@ -1,23 +1,14 @@
-import 'package:device_preview/device_preview.dart';
-// import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:portfolio_2023/page/home_page.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-// void main() {
-//   WidgetsFlutterBinding.ensureInitialized();
-//   runApp(
-//     DevicePreview(
-//       enabled: !kReleaseMode,
-//       builder: (context) => const ProviderScope(
-//         child: MyApp(),
-//       ), // Wrap your app
-//     ),
-//   );
-// }
-
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(
     const ProviderScope(
       child: MyApp(),
@@ -31,9 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Koyo Mori',
-      locale: DevicePreview.locale(context),
       debugShowCheckedModeBanner: false,
-      builder: DevicePreview.appBuilder,
       theme: ThemeData.light(),
       // darkTheme: ThemeData.dark(),
       home: const HomePage(),
