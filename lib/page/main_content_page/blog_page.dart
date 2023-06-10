@@ -8,33 +8,7 @@ class BlogPage extends ConsumerWidget {
   const BlogPage({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final List<Article> articles = [
-      Article(
-        title: 'テスト1',
-        createDate: DateTime.now(),
-        imagePath: "images/back.jpg",
-        overview:
-            'tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt',
-      ),
-      Article(
-        title: 'テスト2',
-        createDate: DateTime.now(),
-        imagePath: "images/back.jpg",
-        overview: 'tttttttttttttttttttttttttttttttttttttttttttt',
-      ),
-      Article(
-        title: 'テスト3',
-        createDate: DateTime.now(),
-        imagePath: "images/back.jpg",
-        overview: 'tttttttttttttttttttttttttttttttttttttttttttt',
-      ),
-      Article(
-        title: 'テスト4',
-        createDate: DateTime.now(),
-        imagePath: "images/back.jpg",
-        overview: 'tttttttttttttttttttttttttttttttttttttttttttt',
-      ),
-    ];
+    final List<Article> articles = [];
     final mediumSize = ref.watch(mediumSizeProvider);
     final widgetWidth = mediumSize < MediaQuery.of(context).size.width
         ? 600.0

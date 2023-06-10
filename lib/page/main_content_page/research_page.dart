@@ -10,29 +10,12 @@ class ResearchPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final List<Article> articles = [
       Article(
+        id: '1',
         title: 'テスト1',
         createDate: DateTime.now(),
         imagePath: "images/back.jpg",
         overview:
             'tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt',
-      ),
-      Article(
-        title: 'テスト2',
-        createDate: DateTime.now(),
-        imagePath: "images/back.jpg",
-        overview: 'tttttttttttttttttttttttttttttttttttttttttttt',
-      ),
-      Article(
-        title: 'テスト3',
-        createDate: DateTime.now(),
-        imagePath: "images/back.jpg",
-        overview: 'tttttttttttttttttttttttttttttttttttttttttttt',
-      ),
-      Article(
-        title: 'テスト4',
-        createDate: DateTime.now(),
-        imagePath: "images/back.jpg",
-        overview: 'tttttttttttttttttttttttttttttttttttttttttttt',
       ),
     ];
     final mediumSize = ref.watch(mediumSizeProvider);
