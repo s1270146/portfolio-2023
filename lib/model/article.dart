@@ -6,6 +6,7 @@ import 'package:portfolio_2023/page/main_content_page/article_page.dart';
 import 'package:portfolio_2023/page/main_content_page/main_content_page_provider.dart';
 
 class Article {
+  final String id;
   final String title;
   final DateTime createDate;
   final DateTime? editDate;
@@ -13,12 +14,58 @@ class Article {
   final String? overview;
 
   const Article({
+    required this.id,
     required this.title,
     required this.createDate,
     this.editDate,
     required this.imagePath,
     this.overview,
   });
+
+  factory Article.fromJson(String id, Map<String, dynamic> data) {
+    return Article(
+      id: id,
+      title: data['title'],
+      createDate: data['createDate'].toDate(),
+      editDate: data['editDate'],
+      imagePath: data['imagePath'],
+      overview: data['overview'],
+    );
+  }
+
+  Article copyWith({
+    String? id,
+    String? title,
+    DateTime? createDate,
+    DateTime? editDate,
+    String? imagePath,
+    String? overview,
+  }) {
+    return Article(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      createDate: createDate ?? this.createDate,
+      editDate: editDate ?? this.editDate,
+      imagePath: imagePath ?? this.imagePath,
+      overview: overview ?? this.overview,
+    );
+  }
+
+  Map<String, dynamic> toJson({
+    String? title,
+    DateTime? createDate,
+    DateTime? editDate,
+    String? imagePath,
+    String? overview,
+  }) {
+    return {
+      'title': title ?? this.title,
+      'createDate': createDate ?? this.createDate,
+      'editDate': editDate ?? this.editDate,
+      'imagePath': imagePath ?? this.imagePath,
+      'overview': overview ?? this.overview,
+    };
+  }
 
   Widget articleTitle(int no, double widgetWidth, WidgetRef ref) {
     final myColor = ref.watch(customColorProvider);
