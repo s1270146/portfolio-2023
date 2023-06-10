@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:portfolio_2023/page/admin/admin_login_page.dart';
 import 'package:portfolio_2023/page/home_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -25,7 +26,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light(),
       // darkTheme: ThemeData.dark(),
-      home: const HomePage(),
+      // home: const HomePage(),
+      routes: {
+        '/': (context) => const HomePage(),
+        '/admin': (context) => const AdminLoginPage(),
+      },
     );
   }
 }
