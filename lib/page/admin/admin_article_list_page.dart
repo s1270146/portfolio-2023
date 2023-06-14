@@ -62,7 +62,9 @@ class AdminArticleListPage extends StatelessWidget {
                       onPressed: () => Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const AdminArticleCreatePage(),
+                          builder: (context) => const AdminArticleCreatePage(
+                            collectionName: 'blog',
+                          ),
                         ),
                       ),
                       icon: const Icon(
