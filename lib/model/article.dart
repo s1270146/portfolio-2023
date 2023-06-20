@@ -27,7 +27,7 @@ class Article {
       id: id,
       title: data['title'],
       createDate: data['createDate'].toDate(),
-      editDate: data['editDate'],
+      editDate: data['editDate']?.toDate(),
       imagePath: data['imagePath'],
       overview: data['overview'],
     );
