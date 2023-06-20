@@ -1,12 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:portfolio_2023/component/admin_provider/admin_variable.dart';
 import 'package:portfolio_2023/page/admin/admin_article_create_page.dart';
 
-class AdminArticleListPage extends StatelessWidget {
+class AdminArticleListPage extends ConsumerWidget {
   const AdminArticleListPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final category = ref.watch(categoryProvider);
+    final articleList = ref.watch(articleListProvider);
     currentAdminUser();
     return Scaffold(
       appBar: AppBar(
@@ -41,6 +45,7 @@ class AdminArticleListPage extends StatelessWidget {
                       width: 300,
                       child: DropdownButton(
                         isExpanded: true,
+                        value: category,
                         items: const <DropdownMenuItem>[
                           DropdownMenuItem(
                             value: 'blog',
@@ -55,15 +60,19 @@ class AdminArticleListPage extends StatelessWidget {
                             child: Text('Research'),
                           ),
                         ],
-                        onChanged: (value) {},
+                        onChanged: (value) {
+                          ref.read(categoryProvider.notifier).update(
+                                (state) => value.toString(),
+                              );
+                        },
                       ),
                     ),
                     IconButton(
                       onPressed: () => Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const AdminArticleCreatePage(
-                            collectionName: 'blog',
+                          builder: (context) => AdminArticleCreatePage(
+                            collectionName: category,
                           ),
                         ),
                       ),
@@ -74,6 +83,39 @@ class AdminArticleListPage extends StatelessWidget {
                   ],
                 ),
               ),
+            ),
+            articleList.when(
+              data: (list) {
+                List<Container> containerList = [];
+                for (var article in list) {
+                  containerList.add(
+                    Container(
+                      margin: const EdgeInsets.all(5),
+                      width: 250,
+                      height: 80,
+                      child: Stack(
+                        children: [
+                          Align(
+                            alignment: Alignment.center,
+                            child: Text(article.title),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }
+                return Column(
+                  children: containerList,
+                );
+              },
+              error: (error, stackTrace) {
+                return Text(
+                  error.toString(),
+                );
+              },
+              loading: () {
+                return const CircularProgressIndicator();
+              },
             ),
           ],
         ),

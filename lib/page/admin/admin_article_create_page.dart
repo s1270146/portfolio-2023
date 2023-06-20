@@ -34,6 +34,14 @@ class _AdminArticleCreatePageState extends State<AdminArticleCreatePage> {
                 bottom: 10,
               ),
               width: 250,
+              child: Text('Category : ${widget.collectionName}'),
+            ),
+            Container(
+              margin: const EdgeInsets.only(
+                top: 20,
+                bottom: 10,
+              ),
+              width: 250,
               child: TextField(
                 controller: titleController,
                 decoration: const InputDecoration(
