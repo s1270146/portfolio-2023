@@ -15,3 +15,6 @@ final articleListProvider = StreamProvider((ref) {
     return articleList;
   });
 });
+
+final editArticleProvider =
+    StateProvider.family<Article, Article>((ref, Article article) => article);
