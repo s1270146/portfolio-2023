@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:portfolio_2023/component/admin_provider/admin_variable.dart';
 import 'package:portfolio_2023/page/admin/admin_article_create_page.dart';
+import 'package:portfolio_2023/page/admin/admin_article_edit.dart';
 
 class AdminArticleListPage extends ConsumerWidget {
   const AdminArticleListPage({super.key});
@@ -11,7 +12,6 @@ class AdminArticleListPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final category = ref.watch(categoryProvider);
     final articleList = ref.watch(articleListProvider);
-    currentAdminUser();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Admin Page'),
@@ -86,20 +86,38 @@ class AdminArticleListPage extends ConsumerWidget {
             ),
             articleList.when(
               data: (list) {
-                List<Container> containerList = [];
+                List<Widget> containerList = [];
                 for (var article in list) {
                   containerList.add(
-                    Container(
-                      margin: const EdgeInsets.all(5),
-                      width: 250,
-                      height: 80,
-                      child: Stack(
-                        children: [
-                          Align(
-                            alignment: Alignment.center,
-                            child: Text(article.title),
-                          ),
-                        ],
+                    GestureDetector(
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              AdminArticleEditPage(article: article),
+                        ),
+                      ),
+                      child: Container(
+                        margin: const EdgeInsets.all(5),
+                        padding: const EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        width: 300,
+                        height: 80,
+                        child: Stack(
+                          children: [
+                            Align(
+                              alignment: Alignment.topLeft,
+                              child: Text(article.title),
+                            ),
+                            Align(
+                              alignment: Alignment.topRight,
+                              child: Text(article.createDate.toString()),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   );
@@ -120,18 +138,6 @@ class AdminArticleListPage extends ConsumerWidget {
           ],
         ),
       ),
-    );
-  }
-
-  void currentAdminUser() {
-    FirebaseAuth.instance.authStateChanges().listen(
-      (User? user) {
-        if (user != null) {
-          print(user.uid);
-        } else {
-          print('signout');
-        }
-      },
     );
   }
 }
