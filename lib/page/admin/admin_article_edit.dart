@@ -1,34 +1,45 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:portfolio_2023/component/admin_provider/admin_variable.dart';
 import 'package:portfolio_2023/model/article.dart';
 
-class AdminArticleEditPage extends ConsumerStatefulWidget {
+class AdminArticleEditPage extends StatefulWidget {
   const AdminArticleEditPage({
     super.key,
     required this.article,
+    required this.collectionName,
   });
   final Article article;
+  final String collectionName;
   @override
-  ConsumerState<AdminArticleEditPage> createState() =>
-      _AdminArticleEditPageState();
+  State<AdminArticleEditPage> createState() => _AdminArticleEditPageState();
 }
 
-class _AdminArticleEditPageState extends ConsumerState<AdminArticleEditPage> {
+class _AdminArticleEditPageState extends State<AdminArticleEditPage> {
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController overviewController = TextEditingController();
+  final TextEditingController imagePathController = TextEditingController();
+  late DateTime createDate;
+  DateTime? editDate;
   final format = DateFormat('yyyy年MM月dd日');
+
   @override
   void initState() {
     super.initState();
-    setState(() {});
+    setState(() {
+      titleController.text = widget.article.title;
+      overviewController.text = widget.article.overview!;
+      imagePathController.text = widget.article.imagePath;
+      createDate = widget.article.createDate;
+      editDate = widget.article.editDate;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final editArticle = ref.watch(editArticleProvider(widget.article));
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit Article'),
+        title: const Text('Create Article'),
       ),
       body: Center(
         child: Column(
@@ -47,18 +58,12 @@ class _AdminArticleEditPageState extends ConsumerState<AdminArticleEditPage> {
                 bottom: 10,
               ),
               width: 250,
-              child: TextFormField(
-                initialValue: editArticle.title,
+              child: TextField(
+                controller: titleController,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Title',
                 ),
-                onChanged: (value) =>
-                    ref.read(editArticleProvider(editArticle).notifier).update(
-                          (state) => state.copyWith(
-                            title: value,
-                          ),
-                        ),
               ),
             ),
             Container(
@@ -67,16 +72,10 @@ class _AdminArticleEditPageState extends ConsumerState<AdminArticleEditPage> {
                 bottom: 10,
               ),
               width: 250,
-              child: TextFormField(
-                initialValue: editArticle.overview,
+              child: TextField(
+                controller: overviewController,
                 keyboardType: TextInputType.multiline,
                 maxLines: 5,
-                onChanged: (value) =>
-                    ref.read(editArticleProvider(editArticle).notifier).update(
-                          (state) => state.copyWith(
-                            overview: value,
-                          ),
-                        ),
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Overview',
@@ -85,16 +84,11 @@ class _AdminArticleEditPageState extends ConsumerState<AdminArticleEditPage> {
             ),
             GestureDetector(
               onTap: () async {
-                final selectedDate = await showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime(DateTime.now().year - 1),
-                  lastDate: DateTime(DateTime.now().year + 1),
-                );
+                final selectedDate = await selectDate();
                 if (selectedDate != null) {
-                  ref.read(editArticleProvider(editArticle).notifier).update(
-                        (state) => state.copyWith(createDate: selectedDate),
-                      );
+                  setState(() {
+                    createDate = selectedDate;
+                  });
                 }
               },
               child: Container(
@@ -112,7 +106,7 @@ class _AdminArticleEditPageState extends ConsumerState<AdminArticleEditPage> {
                 height: 60,
                 child: Center(
                   child: Text(
-                    format.format(editArticle.createDate),
+                    format.format(createDate),
                     style: const TextStyle(
                       color: Colors.grey,
                     ),
@@ -122,16 +116,11 @@ class _AdminArticleEditPageState extends ConsumerState<AdminArticleEditPage> {
             ),
             GestureDetector(
               onTap: () async {
-                final selectedDate = await showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime(DateTime.now().year - 1),
-                  lastDate: DateTime(DateTime.now().year + 1),
-                );
+                final selectedDate = await selectDate();
                 if (selectedDate != null) {
-                  ref.watch(editArticleProvider(editArticle).notifier).update(
-                        (state) => state.copyWith(editDate: selectedDate),
-                      );
+                  setState(() {
+                    editDate = selectedDate;
+                  });
                 }
               },
               child: Container(
@@ -149,9 +138,7 @@ class _AdminArticleEditPageState extends ConsumerState<AdminArticleEditPage> {
                 height: 60,
                 child: Center(
                   child: Text(
-                    editArticle.editDate != null
-                        ? format.format(editArticle.editDate!)
-                        : '編集日',
+                    editDate != null ? format.format(editDate!) : '編集日',
                     style: const TextStyle(
                       color: Colors.grey,
                     ),
@@ -165,14 +152,8 @@ class _AdminArticleEditPageState extends ConsumerState<AdminArticleEditPage> {
                 bottom: 10,
               ),
               width: 250,
-              child: TextFormField(
-                initialValue: editArticle.imagePath,
-                onChanged: (value) =>
-                    ref.watch(editArticleProvider(editArticle).notifier).update(
-                          (state) => state.copyWith(
-                            imagePath: value,
-                          ),
-                        ),
+              child: TextField(
+                controller: imagePathController,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'ImagePath',
@@ -184,16 +165,53 @@ class _AdminArticleEditPageState extends ConsumerState<AdminArticleEditPage> {
                 top: 20,
                 bottom: 10,
               ),
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('Edit'),
+              width: 400,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red,
+                    ),
+                    onPressed: () {
+                      FirebaseFirestore.instance
+                          .collection(widget.collectionName)
+                          .doc(widget.article.id)
+                          .delete();
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Delete'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      widget.article
+                          .copyWith(
+                            title: titleController.text,
+                            overview: overviewController.text,
+                            imagePath: imagePathController.text,
+                            createDate: createDate,
+                            editDate: editDate,
+                          )
+                          .toFirestore(collectionName: widget.collectionName);
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Register'),
+                  ),
+                ],
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Future<DateTime?> selectDate() async {
+    return await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(DateTime.now().year - 1),
+      lastDate: DateTime(DateTime.now().year + 1),
     );
   }
 }

@@ -68,12 +68,7 @@ class _AdminArticleCreatePageState extends State<AdminArticleCreatePage> {
             ),
             GestureDetector(
               onTap: () async {
-                final selectedDate = await showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime(DateTime.now().year),
-                  lastDate: DateTime(DateTime.now().year + 1),
-                );
+                final selectedDate = await selectDate();
                 if (selectedDate != null) {
                   setState(() {
                     createDate = selectedDate;
@@ -105,12 +100,7 @@ class _AdminArticleCreatePageState extends State<AdminArticleCreatePage> {
             ),
             GestureDetector(
               onTap: () async {
-                final selectedDate = await showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime(DateTime.now().year),
-                  lastDate: DateTime(DateTime.now().year + 1),
-                );
+                final selectedDate = await selectDate();
                 if (selectedDate != null) {
                   setState(() {
                     editDate = selectedDate;
@@ -188,5 +178,14 @@ class _AdminArticleCreatePageState extends State<AdminArticleCreatePage> {
       'editDate': editDate,
       'imagePath': imagePath,
     });
+  }
+
+  Future<DateTime?> selectDate() async {
+    return await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(DateTime.now().year - 1),
+      lastDate: DateTime(DateTime.now().year + 1),
+    );
   }
 }

@@ -93,8 +93,10 @@ class AdminArticleListPage extends ConsumerWidget {
                       onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>
-                              AdminArticleEditPage(article: article),
+                          builder: (context) => AdminArticleEditPage(
+                            article: article.copyWith(),
+                            collectionName: category,
+                          ),
                         ),
                       ),
                       child: Container(
