@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -65,6 +66,12 @@ class Article {
       'imagePath': imagePath ?? this.imagePath,
       'overview': overview ?? this.overview,
     };
+  }
+
+  void toFirestore({required String collectionName}) {
+    FirebaseFirestore.instance.collection(collectionName).doc(id).update(
+          toJson(),
+        );
   }
 
   Widget articleTitle(int no, double widgetWidth, WidgetRef ref) {
