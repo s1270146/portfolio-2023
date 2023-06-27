@@ -2,22 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:portfolio_2023/component/profile/profile_title.dart';
 import 'package:portfolio_2023/component/variable_provider.dart';
-import 'package:portfolio_2023/model/article.dart';
 
 class WorksPage extends ConsumerWidget {
   const WorksPage({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final List<Article> articles = [
-      Article(
-        id: '1',
-        title: 'テスト1',
-        createDate: DateTime.now(),
-        imagePath: "images/back.jpg",
-        overview:
-            'tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt',
-      ),
-    ];
+    final articles = ref.watch(worksArticleListProvider);
     final mediumSize = ref.watch(mediumSizeProvider);
     final widgetWidth = mediumSize < MediaQuery.of(context).size.width
         ? 600.0
@@ -31,12 +21,28 @@ class WorksPage extends ConsumerWidget {
               child:
                   ProfileTitle(profileTitleWidth: widgetWidth, title: 'Works'),
             ),
-            for (int i = 0; i < articles.length; i++) ...{
-              Container(
-                margin: const EdgeInsets.all(20),
-                child: articles[i].articleTitle(i, widgetWidth, ref),
-              )
-            }
+            articles.when(
+              data: (data) {
+                List<Widget> widgets = [];
+                int i = 0;
+                for (var article in data) {
+                  widgets.add(Container(
+                    margin: const EdgeInsets.all(20),
+                    child: article.articleTitle(i, widgetWidth, ref, 'works'),
+                  ));
+                  i++;
+                }
+                return Column(
+                  children: widgets,
+                );
+              },
+              error: (e, trace) {
+                return Text(e.toString());
+              },
+              loading: () => const Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
           ],
         ),
       ),
