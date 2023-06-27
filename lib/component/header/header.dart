@@ -54,7 +54,12 @@ class Header extends ConsumerWidget implements PreferredSizeWidget {
           onTap: () {
             Navigator.pop(context);
           },
-          child: const Text("Portfolio"),
+          child: const Text(
+            "Portfolio",
+            style: TextStyle(
+              fontSize: 30,
+            ),
+          ),
         ),
       ),
       automaticallyImplyLeading: false, // 戻るボタン無くす
