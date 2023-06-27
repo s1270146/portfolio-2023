@@ -20,6 +20,7 @@ class TypeWriterText extends ConsumerWidget {
       onTap: () {},
       child: DefaultTextStyle(
         style: const TextStyle(
+          color: Colors.black,
           fontSize: 60.0,
           fontFamily: 'Agne',
         ),
