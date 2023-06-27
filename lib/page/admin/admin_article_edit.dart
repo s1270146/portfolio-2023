@@ -19,6 +19,7 @@ class _AdminArticleEditPageState extends State<AdminArticleEditPage> {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController overviewController = TextEditingController();
   final TextEditingController imagePathController = TextEditingController();
+  final TextEditingController contentsController = TextEditingController();
   late DateTime createDate;
   DateTime? editDate;
   final format = DateFormat('yyyy年MM月dd日');
@@ -30,6 +31,7 @@ class _AdminArticleEditPageState extends State<AdminArticleEditPage> {
       titleController.text = widget.article.title;
       overviewController.text = widget.article.overview!;
       imagePathController.text = widget.article.imagePath;
+      contentsController.text = widget.article.contents;
       createDate = widget.article.createDate;
       editDate = widget.article.editDate;
     });
@@ -42,165 +44,184 @@ class _AdminArticleEditPageState extends State<AdminArticleEditPage> {
         title: const Text('Create Article'),
       ),
       body: Center(
-        child: Column(
-          children: [
-            Container(
-              margin: const EdgeInsets.only(
-                top: 20,
-                bottom: 10,
-              ),
-              width: 250,
-              child: Text('ID : ${widget.article.id}'),
-            ),
-            Container(
-              margin: const EdgeInsets.only(
-                top: 20,
-                bottom: 10,
-              ),
-              width: 250,
-              child: TextField(
-                controller: titleController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Title',
-                ),
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(
-                top: 20,
-                bottom: 10,
-              ),
-              width: 250,
-              child: TextField(
-                controller: overviewController,
-                keyboardType: TextInputType.multiline,
-                maxLines: 5,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Overview',
-                ),
-              ),
-            ),
-            GestureDetector(
-              onTap: () async {
-                final selectedDate = await selectDate();
-                if (selectedDate != null) {
-                  setState(() {
-                    createDate = selectedDate;
-                  });
-                }
-              },
-              child: Container(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
                 margin: const EdgeInsets.only(
                   top: 20,
-                  bottom: 20,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  border: Border.all(
-                    color: Colors.grey,
-                  ),
+                  bottom: 10,
                 ),
                 width: 250,
-                height: 60,
-                child: Center(
-                  child: Text(
-                    format.format(createDate),
-                    style: const TextStyle(
+                child: Text('ID : ${widget.article.id}'),
+              ),
+              Container(
+                margin: const EdgeInsets.only(
+                  top: 20,
+                  bottom: 10,
+                ),
+                width: 250,
+                child: TextField(
+                  controller: titleController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Title',
+                  ),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(
+                  top: 20,
+                  bottom: 10,
+                ),
+                width: 250,
+                child: TextField(
+                  controller: overviewController,
+                  keyboardType: TextInputType.multiline,
+                  maxLines: 5,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Overview',
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () async {
+                  final selectedDate = await selectDate();
+                  if (selectedDate != null) {
+                    setState(() {
+                      createDate = selectedDate;
+                    });
+                  }
+                },
+                child: Container(
+                  margin: const EdgeInsets.only(
+                    top: 20,
+                    bottom: 20,
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    border: Border.all(
                       color: Colors.grey,
                     ),
                   ),
-                ),
-              ),
-            ),
-            GestureDetector(
-              onTap: () async {
-                final selectedDate = await selectDate();
-                if (selectedDate != null) {
-                  setState(() {
-                    editDate = selectedDate;
-                  });
-                }
-              },
-              child: Container(
-                margin: const EdgeInsets.only(
-                  top: 20,
-                  bottom: 20,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  border: Border.all(
-                    color: Colors.grey,
+                  width: 250,
+                  height: 60,
+                  child: Center(
+                    child: Text(
+                      format.format(createDate),
+                      style: const TextStyle(
+                        color: Colors.grey,
+                      ),
+                    ),
                   ),
                 ),
-                width: 250,
-                height: 60,
-                child: Center(
-                  child: Text(
-                    editDate != null ? format.format(editDate!) : '編集日',
-                    style: const TextStyle(
+              ),
+              GestureDetector(
+                onTap: () async {
+                  final selectedDate = await selectDate();
+                  if (selectedDate != null) {
+                    setState(() {
+                      editDate = selectedDate;
+                    });
+                  }
+                },
+                child: Container(
+                  margin: const EdgeInsets.only(
+                    top: 20,
+                    bottom: 20,
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    border: Border.all(
                       color: Colors.grey,
                     ),
                   ),
-                ),
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(
-                top: 20,
-                bottom: 10,
-              ),
-              width: 250,
-              child: TextField(
-                controller: imagePathController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'ImagePath',
-                ),
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(
-                top: 20,
-                bottom: 10,
-              ),
-              width: 400,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red,
+                  width: 250,
+                  height: 60,
+                  child: Center(
+                    child: Text(
+                      editDate != null ? format.format(editDate!) : '編集日',
+                      style: const TextStyle(
+                        color: Colors.grey,
+                      ),
                     ),
-                    onPressed: () {
-                      FirebaseFirestore.instance
-                          .collection(widget.collectionName)
-                          .doc(widget.article.id)
-                          .delete();
-                      Navigator.pop(context);
-                    },
-                    child: const Text('Delete'),
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      widget.article
-                          .copyWith(
-                            title: titleController.text,
-                            overview: overviewController.text,
-                            imagePath: imagePathController.text,
-                            createDate: createDate,
-                            editDate: editDate,
-                          )
-                          .toFirestore(collectionName: widget.collectionName);
-                      Navigator.pop(context);
-                    },
-                    child: const Text('Register'),
-                  ),
-                ],
+                ),
               ),
-            ),
-          ],
+              Container(
+                margin: const EdgeInsets.only(
+                  top: 20,
+                  bottom: 10,
+                ),
+                width: 250,
+                child: TextField(
+                  controller: imagePathController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'ImagePath',
+                  ),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(
+                  top: 20,
+                  bottom: 10,
+                ),
+                width: 250,
+                child: TextField(
+                  controller: contentsController,
+                  keyboardType: TextInputType.multiline,
+                  maxLines: 10,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Contents',
+                  ),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(
+                  top: 20,
+                  bottom: 10,
+                ),
+                width: 400,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+                      ),
+                      onPressed: () {
+                        FirebaseFirestore.instance
+                            .collection(widget.collectionName)
+                            .doc(widget.article.id)
+                            .delete();
+                        Navigator.pop(context);
+                      },
+                      child: const Text('Delete'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        widget.article
+                            .copyWith(
+                              title: titleController.text,
+                              overview: overviewController.text,
+                              imagePath: imagePathController.text,
+                              createDate: createDate,
+                              editDate: editDate,
+                              contents: contentsController.text,
+                            )
+                            .toFirestore(collectionName: widget.collectionName);
+                        Navigator.pop(context);
+                      },
+                      child: const Text('Register'),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

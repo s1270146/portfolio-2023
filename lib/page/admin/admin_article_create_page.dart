@@ -16,6 +16,7 @@ class _AdminArticleCreatePageState extends State<AdminArticleCreatePage> {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController overviewController = TextEditingController();
   final TextEditingController imagePathController = TextEditingController();
+  final TextEditingController contentsController = TextEditingController();
   DateTime createDate = DateTime.now();
   DateTime? editDate;
   final format = DateFormat('yyyy年MM月dd日');
@@ -149,6 +150,22 @@ class _AdminArticleCreatePageState extends State<AdminArticleCreatePage> {
                 top: 20,
                 bottom: 10,
               ),
+              width: 250,
+              child: TextField(
+                controller: contentsController,
+                keyboardType: TextInputType.multiline,
+                maxLines: 10,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Contents',
+                ),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(
+                top: 20,
+                bottom: 10,
+              ),
               child: ElevatedButton(
                 onPressed: () {
                   articleRegister(
@@ -157,6 +174,7 @@ class _AdminArticleCreatePageState extends State<AdminArticleCreatePage> {
                     createDate,
                     editDate,
                     imagePathController.text,
+                    contentsController.text,
                   );
                   Navigator.pop(context);
                 },
@@ -170,13 +188,14 @@ class _AdminArticleCreatePageState extends State<AdminArticleCreatePage> {
   }
 
   void articleRegister(String title, String overview, DateTime createDate,
-      DateTime? editDate, String imagePath) {
+      DateTime? editDate, String imagePath, contents) {
     FirebaseFirestore.instance.collection(widget.collectionName).add({
       'title': title,
       'overview': overview,
       'createDate': createDate,
       'editDate': editDate,
       'imagePath': imagePath,
+      'contents': contents,
     });
   }
 
