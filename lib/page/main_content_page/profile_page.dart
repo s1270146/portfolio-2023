@@ -13,7 +13,7 @@ class ProfilePage extends ConsumerWidget {
   final String universityName = '大学: 会津大学大学院';
   final String majorName = '研究科・専攻: コンピュータ理工学研究科 コンピュータ・情報システム学専攻';
   final String contents =
-      'ポートフォリオをご覧いただきありがとうございます!\n大学院生の森と申します。\nアルバイトでアプリやWebの開発を行っています。\n研究では暗号をテーマに研究をしております。\n学部のときは、楕円曲線暗号を研究していました。\n現在は同種写像暗号に興味を持っています。\n\n趣味はサッカーです。自分のMacbook Airのスペックが低すぎて、Ubuntu 23.04に乗り換えました。。。';
+      'ポートフォリオをご覧いただきありがとうございます!\n大学院生の森と申します。\nアルバイトでアプリやWebの開発を行っています。\n研究では暗号をテーマに研究をしております。\n学部のときは、楕円曲線暗号を研究していました。\n現在は同種写像暗号に興味を持っています。\n\n趣味はサッカーです。自分のMacbook Airのスペックが低すぎて、Ubuntu 23.04を使ってみています。。';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
