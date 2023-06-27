@@ -13,6 +13,7 @@ class Article {
   final DateTime? editDate;
   final String imagePath;
   final String? overview;
+  final String contents;
 
   const Article({
     required this.id,
@@ -21,17 +22,18 @@ class Article {
     this.editDate,
     required this.imagePath,
     this.overview,
+    required this.contents,
   });
 
   factory Article.fromJson(String id, Map<String, dynamic> data) {
     return Article(
-      id: id,
-      title: data['title'],
-      createDate: data['createDate'].toDate(),
-      editDate: data['editDate']?.toDate(),
-      imagePath: data['imagePath'],
-      overview: data['overview'],
-    );
+        id: id,
+        title: data['title'],
+        createDate: data['createDate'].toDate(),
+        editDate: data['editDate']?.toDate(),
+        imagePath: data['imagePath'],
+        overview: data['overview'],
+        contents: data['contents']);
   }
 
   Article copyWith({
@@ -41,6 +43,7 @@ class Article {
     DateTime? editDate,
     String? imagePath,
     String? overview,
+    String? contents,
   }) {
     return Article(
       id: id ?? this.id,
@@ -49,6 +52,7 @@ class Article {
       editDate: editDate ?? this.editDate,
       imagePath: imagePath ?? this.imagePath,
       overview: overview ?? this.overview,
+      contents: contents ?? this.contents,
     );
   }
 
@@ -58,6 +62,7 @@ class Article {
     DateTime? editDate,
     String? imagePath,
     String? overview,
+    String? contents,
   }) {
     return {
       'title': title ?? this.title,
@@ -65,6 +70,7 @@ class Article {
       'editDate': editDate ?? this.editDate,
       'imagePath': imagePath ?? this.imagePath,
       'overview': overview ?? this.overview,
+      'contents': contents ?? this.contents,
     };
   }
 
@@ -74,7 +80,8 @@ class Article {
         );
   }
 
-  Widget articleTitle(int no, double widgetWidth, WidgetRef ref) {
+  Widget articleTitle(
+      int index, double widgetWidth, WidgetRef ref, String category) {
     final myColor = ref.watch(customColorProvider);
     final format = DateFormat('yyyy年MM月dd日');
     return MouseRegion(
@@ -82,12 +89,15 @@ class Article {
       child: GestureDetector(
         onTap: () {
           ref.read(currentPageProvider.notifier).update(
-                (state) => ArticlePage(data: '# Markdownパッケージの実線(# h1)'),
+                (state) => ArticlePage(
+                  data: contents,
+                  category: category,
+                ),
               );
         },
         child: Container(
           decoration: BoxDecoration(
-            color: no % 2 == 0 ? myColor.green : myColor.orange,
+            color: index % 2 == 0 ? myColor.green : myColor.orange,
             borderRadius: BorderRadius.circular(10),
           ),
           width: widgetWidth,
@@ -103,7 +113,16 @@ class Article {
                 child: FittedBox(
                   fit: BoxFit.fitWidth,
                   clipBehavior: Clip.antiAlias,
-                  child: Image.asset(imagePath),
+                  child: Image.network(
+                    imagePath,
+                    errorBuilder: (context, object, stackTrace) {
+                      print('Load failed : ${context.toString()}');
+                      return const Icon(
+                        Icons.error,
+                        color: Colors.red,
+                      );
+                    },
+                  ),
                 ),
               ),
               Container(
