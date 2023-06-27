@@ -26,25 +26,37 @@ class Header extends ConsumerWidget implements PreferredSizeWidget {
       backgroundColor: myColor.blue,
       toolbarHeight: 70,
       leadingWidth: 100,
-      leading: MouseRegion(
-        cursor: SystemMouseCursors.click, // クリックカーソルを指定
+
+      // ヘッダー写真諦め
+
+      // leading: MouseRegion(
+      //   cursor: SystemMouseCursors.click, // クリックカーソルを指定
+      //   child: GestureDetector(
+      //     onTap: () {
+      //       Navigator.pop(context);
+      //     },
+      //     child: Container(
+      //       margin: const EdgeInsets.only(left: 20),
+      // padding: const EdgeInsets.all(0),
+      //       child: Image.asset(
+      //         'images/back.jpg',
+      //         colorBlendMode: BlendMode.srcIn,
+      //         color: Colors.transparent,
+      //         fit: BoxFit.contain,
+      //       ),
+      //     ),
+      //   ),
+      // ),
+
+      title: MouseRegion(
+        cursor: SystemMouseCursors.click,
         child: GestureDetector(
           onTap: () {
             Navigator.pop(context);
           },
-          child: Container(
-            margin: const EdgeInsets.only(left: 20),
-            // padding: const EdgeInsets.all(0),
-            child: Image.asset(
-              'images/title.png',
-              colorBlendMode: BlendMode.srcIn,
-              color: Colors.transparent,
-              fit: BoxFit.contain,
-            ),
-          ),
+          child: const Text("Portfolio"),
         ),
       ),
-      // title: const Text("ヘッダー"),
       automaticallyImplyLeading: false, // 戻るボタン無くす
       elevation: 0.0, // 影を無くす
       actions: MediaQuery.of(context).size.width > maxPhoneWidth
