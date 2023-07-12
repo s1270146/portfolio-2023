@@ -6,7 +6,10 @@ final categoryProvider = StateProvider<String>((ref) => 'blog');
 
 final articleListProvider = StreamProvider((ref) {
   final category = ref.watch(categoryProvider);
-  final firestore = FirebaseFirestore.instance.collection(category).snapshots();
+  final firestore = FirebaseFirestore.instance
+      .collection(category)
+      .orderBy('createDate', descending: true)
+      .snapshots();
   return firestore.map((event) {
     List<Article> articleList = [];
     for (var doc in event.docs) {
