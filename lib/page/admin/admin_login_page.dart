@@ -46,14 +46,29 @@ class AdminLoginPage extends StatelessWidget {
               ),
             ),
             ElevatedButton(
-              onPressed: () {
-                adminLogin(usernameController.text, passwordController.text);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const AdminArticleListPage(),
-                  ),
-                );
+              onPressed: () async {
+                adminLogin(usernameController.text, passwordController.text)
+                    .then((user) {
+                  if (user != null) {
+                    const snackBar = SnackBar(
+                      backgroundColor: Colors.green,
+                      content: Text('ログイン成功'),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AdminArticleListPage(),
+                      ),
+                    );
+                  } else {
+                    const snackBar = SnackBar(
+                      backgroundColor: Colors.red,
+                      content: Text('ログイン失敗'),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  }
+                });
               },
               child: const Text('Login'),
             ),
@@ -63,20 +78,20 @@ class AdminLoginPage extends StatelessWidget {
     );
   }
 
-  void adminLogin(String username, String password) async {
+  Future<User?> adminLogin(String username, String password) async {
     try {
       final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: username,
         password: password,
       );
-      print(credential.user!.email);
-      print(credential.user!.uid);
+      return credential.user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
       } else if (e.code == 'wrong-password') {
         print('Wrong password provided for that user.');
       }
+      return null;
     }
   }
 }
